@@ -1,0 +1,6 @@
+SPOI Readme:
+=============
+
+SPOI is a small utility written in c# / .NET. It's main purpose is to scrape syllabus plus timetable web pages and insert the events from SP into a user's outlook calendar. 
+
+This probably isn't that useful to anyone else, but the code is there if anyone wants it.
