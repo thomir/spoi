@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xrml="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <assemblyIdentity name="spoi.application" version="1.0.0.4" publicKeyToken="784bd336c31871ad" language="neutral" processorArchitecture="msil" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <description asmv2:publisher="Otago Polytechnic" asmv2:product="spoi" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <deployment install="true" mapFileExtensions="true">
+    <subscription>
+      <update>
+        <beforeApplicationStartup />
+      </update>
+    </subscription>
+    <deploymentProvider codebase="http://kate.ict.op.ac.nz/~thomi/downloads/spoi.application" />
+  </deployment>
+  <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
+    <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
+  </compatibleFrameworks>
+  <dependency>
+    <dependentAssembly dependencyType="install" codebase="Application Files\spoi_1_0_0_4\spoi.exe.manifest" size="8103">
+      <assemblyIdentity name="spoi.exe" version="1.0.0.4" publicKeyToken="784bd336c31871ad" language="neutral" processorArchitecture="msil" type="win32" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>lStVrJn8FfyncWt3G5A9SCO3qS8=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+<publisherIdentity name="CN=OPNET\thomir" issuerKeyHash="75e6826f7cc9436a0d22cc3f7035345c17dae2b9" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>pEdZeJPtMwpKX8xCFR2eR88oOtM=</DigestValue></Reference></SignedInfo><SignatureValue>xmWdenmisq5E+t6Af0GP4FaXwwrZtVc8ggyE0KM7ms7EaMhb17CYzQpwsRqt0IlxGe7I6ZOI5U77f6Stm14B+LpEjNs0STTlglvwUW67Nlmsp3VKSiCt2f6iL8hsots41Rw6vtdKS0gohswUZaEpa9cqoo8cqz4uh4QZ136oxes=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>0fDI++aadHNXtNchSyk4+N25rZXhKSGtqkE6Soi6kQvMrAG2sgRiMhHV1KdqepTj5ePBBZAY526m4xGAEp/hPwyDgLrDMcu8UBoSewDvWI4t78HPo+gtWWTj+9tZd8gAjftQ8cXSXuaeClm2ir5bogsNEAoldp+rtERTtvsANzc=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="d33a28cf479e1d1542cc5f4a0a33ed93785947a4" Description="" Url=""><as:assemblyIdentity name="spoi.application" version="1.0.0.4" publicKeyToken="784bd336c31871ad" language="neutral" processorArchitecture="msil" xmlns="urn:schemas-microsoft-com:asm.v1" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=OPNET\thomir</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>xqg54phcIJTSrNwTMsJ/ZoMHDX0=</DigestValue></Reference></SignedInfo><SignatureValue>FGoyWOY/IjttrRgnHjcNyZV6lz24vrJ+z3MrvyiS2p+GlUiqeEXlbCzTlc6DtZrggROoglD2s2JkB4pOxdy6uqQWCo96imB8hM34qxpOLoGTpYTZ1osF/5vyPvRzCi7+Rm4zwoLdomKnenO5kNR7iQzx3Cfh8z5yVyQuUMKiXHc=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0fDI++aadHNXtNchSyk4+N25rZXhKSGtqkE6Soi6kQvMrAG2sgRiMhHV1KdqepTj5ePBBZAY526m4xGAEp/hPwyDgLrDMcu8UBoSewDvWI4t78HPo+gtWWTj+9tZd8gAjftQ8cXSXuaeClm2ir5bogsNEAoldp+rtERTtvsANzc=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBwTCCAS6gAwIBAgIQZLFpY6Y+8ZtAJ/YPxE6SljAJBgUrDgMCHQUAMCMxITAfBgNVBAMeGABPAFAATgBFAFQAXAB0AGgAbwBtAGkAcjAeFw0xMDEwMTcyMTExMzBaFw0xMTEwMTgwMzExMzBaMCMxITAfBgNVBAMeGABPAFAATgBFAFQAXAB0AGgAbwBtAGkAcjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA0fDI++aadHNXtNchSyk4+N25rZXhKSGtqkE6Soi6kQvMrAG2sgRiMhHV1KdqepTj5ePBBZAY526m4xGAEp/hPwyDgLrDMcu8UBoSewDvWI4t78HPo+gtWWTj+9tZd8gAjftQ8cXSXuaeClm2ir5bogsNEAoldp+rtERTtvsANzcCAwEAATAJBgUrDgMCHQUAA4GBAMv751bBoVzVMJckmiwEBGBTyK9ZE9Ib8PZY7PRBS+o0CFuSIxMS6M0JHdbIj6z77oxyaNa4nMdMVgBAtSUHlOlWoRuuepf8xizCj2jUQiPbPxxIcsO0vL7Bd9FQTUY8ta+FTP0ayo+Bt4nxTupitelBjQlEsbdLy/IGjshaq/Vy</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
