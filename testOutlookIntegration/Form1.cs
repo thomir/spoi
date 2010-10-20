@@ -23,35 +23,25 @@ namespace testOutlookIntegration
         public Form1()
         {
             InitializeComponent();
-            log("Initialising Application");
+
             log("Opening Outlook");
             OLapp = new Microsoft.Office.Interop.Outlook.Application();
-            log(this.Text + " is ready");
-            //NameSpace ns = OLapp.GetNamespace("MAPI");
-            ////MAPIFolder f = ns.PickFolder();
-            //MAPIFolder rootFolder = ns.GetDefaultFolder(Microsoft.Office.Interop.Outlook.OlDefaultFolders.olFolderCalendar);
-            //calendarList.Items.Add(rootFolder.Name);
-            //Folders folders = rootFolder.Folders;
-            //foreach (MAPIFolder folder in folders)
-            //{
-            //    calendarList.Items.Add(folder.Name);
-            //}
 
-            //calendarList.SelectedIndex = 0;
+            log("Initialising Application");
+            loadWebComponent();     
+            
+            log(this.Text + " is ready");
         }
 
         private void lockForm()
         {
-            textBox1.Enabled = false;
-            button1.Enabled = false;
             weekList.Enabled = false;
+            
             this.Cursor = Cursors.WaitCursor;
         }
 
         private void unlockForm()
         {
-            textBox1.Enabled = true;
-            button1.Enabled = true;
             weekList.Enabled = true;
             this.Cursor = Cursors.Default;
         }
@@ -64,15 +54,13 @@ namespace testOutlookIntegration
             Update();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void doSync(String url)
         {
             lockForm();
 
             // first, remove any old apps that were made previously by this application:
             log("Removing old Outlook appointments created with this application...");
             removeOldAppointments();
-
-            String url = textBox1.Text;
 
             Regex rgxWeeks = new Regex("weeks=\\d+");
             Regex rgxDays = new Regex("days=\\d+\\-\\d+");
@@ -94,24 +82,6 @@ namespace testOutlookIntegration
 
             unlockForm();
         }
-
-        //private MAPIFolder getSelectedFolder()
-        //{
-        //    NameSpace ns = OLapp.GetNamespace("MAPI");
-        //    //MAPIFolder f = ns.PickFolder();
-        //    MAPIFolder rootFolder = ns.GetDefaultFolder(Microsoft.Office.Interop.Outlook.OlDefaultFolders.olFolderCalendar);
-        //    if (calendarList.SelectedItem.ToString() == rootFolder.Name)
-        //        return rootFolder;
-
-        //    Folders folders = rootFolder.Folders;
-        //    foreach (MAPIFolder folder in folders)
-        //    {
-        //        if (folder.Name == calendarList.SelectedItem.ToString())
-        //            return folder;
-        //    }
-
-        //    return rootFolder;
-        //}
 
         private void removeOldAppointments()
         {
@@ -320,6 +290,115 @@ namespace testOutlookIntegration
 
             // print out page source
             return sb.ToString();
+        }
+
+        private void loadWebComponent()
+        {
+            // need to grab the SPLus web page, remove the bits we don't want, and load it into 
+            // our web component. 
+            //
+            // We want to remove all the date controls, and replace the JS that loads the timetable into
+            // a new page. The new JS will pass the URL back to us here. Yay!
+
+
+            // load web page:
+            HtmlAgilityPack.HtmlWeb webLoader = new HtmlAgilityPack.HtmlWeb();
+            HtmlAgilityPack.HtmlDocument doc = webLoader.Load("http://webit.tekotago.ac.nz/SPlus/TT/Splus.cfm?TTvalue=staff");
+
+            XPathNodeIterator it;
+
+            #region JS_REPLACE
+
+            // insert our overloaded JS stuff:
+            String newJS = @"
+function viewTimetable2()
+{
+ 
+	if (document.form.identifier.value=="" "")
+		alert(""Please select a staff members name."");
+	else
+	{				
+		var location;
+		location = ""http://splus.op.ac.nz:8080/reporting/individual?&identifier=""+document.form.identifier.value+""&idtype=id&objectclass=staff&width=100""+CheckWeeks();
+        window.external.loadTimetable(location);
+	}
+}
+";
+
+            // create new script node:
+            HtmlNode n = doc.CreateElement("script");
+            n.SetAttributeValue("type", "text/javascript");
+            n.InnerHtml = newJS;
+
+            // insert new script node right after first div node:
+            HtmlNode bodyTag = doc.DocumentNode.SelectSingleNode("/html");
+            HtmlNode divTag = doc.DocumentNode.SelectSingleNode("/html/div");
+            bodyTag.InsertBefore(n, divTag);
+
+            #endregion
+
+            // remove unwanted table rows:
+            HtmlNode parentNode = doc.DocumentNode.SelectSingleNode("/html/div/table[3]");
+            foreach (HtmlNode cn in parentNode.SelectNodes("tr[position()<6]"))
+            //foreach (HtmlNode cn in parentNode.SelectNodes("tr"))
+            {
+                if (cn != null)
+                    parentNode.RemoveChild(cn, false);
+            }
+
+            // remove unwanted images:
+            foreach (HtmlNode cn in doc.DocumentNode.SelectNodes("//img"))
+            {
+                if (cn != null)
+                {
+                    HtmlNode parent = cn.SelectSingleNode("..");
+                    if (parent != null)
+                    {
+                        parent.RemoveChild(cn);
+                    }
+                }
+            }
+
+            // remove link to parent page:
+            foreach (HtmlNode cn in doc.DocumentNode.SelectNodes("//a[@href='view.cfm']"))
+            {
+                if (cn != null)
+                {
+                    HtmlNode parent = cn.SelectSingleNode("..");
+                    if (parent != null)
+                    {
+                        parent.RemoveChild(cn);
+                    }
+                }
+            }
+            
+
+            //  change input button:
+            HtmlNode inputNode = doc.DocumentNode.SelectSingleNode("//input[@name='goto']");
+            inputNode.SetAttributeValue("value", "Synchronise Timetable");
+            //inputNode.SetAttributeValue("onClick", "viewTimetable2()");
+            inputNode.SetAttributeValue("onClick", "viewTimetable2()");
+
+            StringWriter sw = new StringWriter();
+            doc.Save(sw);
+            web.DocumentText = sw.ToString();
+
+            web.ObjectForScripting = this;
+        }
+
+        public void loadTimetable(String url)
+        {
+            doSync(url);
+        }
+        private void web_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        {
+            // picking last name letter counts as navigation. Allow it:
+            if (e.Url.AbsoluteUri.StartsWith("javascript"))
+                e.Cancel = false;
+            else
+                // but disallow anything else
+                e.Cancel = true;
+         
         }
 
     }
